@@ -168,6 +168,7 @@ class SensuObject():
     def compare(self):
         for key in self.payload:
             if self.payload[key] != self.server_object.get(key):
+                print("FUCK", key, self.payload[key], self.server_object.get(key))
                 return False
         return True
 

@@ -33,7 +33,6 @@ options:
     description:
       - List of filters to use when determining whether to pass the check result to this handler.
     type: list
-    default: []
   mutator:
     description:
       - Mutator to call for transforming the check result before passing it to this handler.
@@ -158,7 +157,6 @@ def main():
         ),
         filters=dict(
             type='list',
-            default=[],
         ),
         mutator=dict(),
         timeout=dict(
