@@ -56,12 +56,12 @@
           - result.checks.0.metadata.name == 'check'
 
     - name: Delete a check
-      sensu_go_asset:
+      sensu_go_check:
         name: check
         state: absent
 
     - name: Get all checks
-      sensu_go_asset_info:
+      sensu_go_check_info:
 
     - assert:
         that:
