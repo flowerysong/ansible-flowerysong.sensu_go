@@ -44,7 +44,8 @@ options:
     default: 60
   env_vars:
     description:
-      - A mapping of environment variable names and values to set when calling the handler C(command)
+      - A mapping of environment variable names and values to use with command execution.
+    type: dict
   socket_host:
     description:
       - Hostname to connect to for C(tcp) or C(udp)
@@ -107,7 +108,6 @@ def main():
         command=dict(),
         env_vars=dict(
             type='dict',
-            default={},
         ),
         socket_host=dict(),
         socket_port=dict(),

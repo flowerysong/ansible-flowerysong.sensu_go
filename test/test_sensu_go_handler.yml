@@ -1,0 +1,89 @@
+- hosts: localhost
+  gather_facts: false
+  collections:
+    - flowerysong.sensu_go
+  module_defaults:
+    group/sensu_go:
+      url: "http://localhost:{{ sensu_port }}/"
+  tasks:
+    - name: Create an handler
+      sensu_go_handler:
+        name: handler
+        type: pipe
+        env_vars:
+          INFLUXDB_ADDR: http://influxdb.default.svc.cluster.local:8086
+          INFLUXDB_USER: sensu
+          INFLUXDB_PASS: password
+        runtime-assets:
+          - sensu-influxdb-handler
+      register: result
+
+    - assert:
+        that: result is changed
+
+    - name: Test handler creation idempotence
+      sensu_go_handler:
+        name: handler
+        type: pipe
+        env_vars:
+          INFLUXDB_ADDR: http://influxdb.default.svc.cluster.local:8086
+          INFLUXDB_USER: sensu
+          INFLUXDB_PASS: password
+        runtime-assets:
+          - sensu-influxdb-handler
+      register: result
+
+    - assert:
+        that: result is not changed
+
+    - name: Test handler can be modified
+      sensu_go_handler:
+        name: handler
+        type: pipe
+        env_vars:
+          INFLUXDB_ADDR: http://influxdb.default.svc.cluster.local:8086
+          INFLUXDB_USER: sensu
+          INFLUXDB_PASS: pass
+        runtime-assets:
+          - sensu-influxdb-handler
+      register: result
+
+    - assert:
+        that: result is changed
+
+    - name: Create a second handler
+      sensu_go_handler:
+        name: handler2
+        type: pipe
+        env_vars:
+          INFLUXDB_ADDR: http://influxdb.default.svc.cluster.local:8086
+          INFLUXDB_USER: sensu
+          INFLUXDB_PASS: password
+        runtime-assets:
+          - sensu-influxdb-handler
+
+    - name: Test getting all assets
+      sensu_go_handler_info:
+
+    - name: Test getting specific handler
+      sensu_go_handler_info:
+        name: handler
+      register: result
+
+    - assert:
+        that:
+          - result.handlers | length == 1
+          - result.handlers.0.metadata.name == 'handler'
+
+    - name: Delete a handler
+      sensu_go_handler:
+        name: handler
+        state: absent
+
+    - name: Get all handlers
+      sensu_go_handler_info:
+
+    - assert:
+        that:
+          - result.handlers | length == 1
+          - result.handlers.0.metadata.name == 'handler2'
