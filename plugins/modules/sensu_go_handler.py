@@ -62,9 +62,69 @@ options:
 '''
 
 EXAMPLES = '''
+sensu_go_handler:
+  name: influx-db
+  type: pipe
+  command: sensu-influxdb-handler -d sensu
+  env_vars:
+    INFLUXDB_ADDR: http://influxdb.default.svc.cluster.local:8086
+    INFLUXDB_USER: sensu
+    INFLUXDB_PASS: password
+  runtime_assets:
+    - sensu-influxdb-handler
 '''
 
 RETURN = '''
+{
+    "changed": true,
+    "handler": {
+        "command": "sensu-influxdb-handler -d sensu",
+        "env_vars": [
+            "INFLUXDB_ADDR=http://influxdb.default.svc.cluster.local:8086",
+            "INFLUXDB_PASS=password",
+            "INFLUXDB_USER=sensu"
+        ],
+        "filters": null,
+        "handlers": null,
+        "metadata": {
+            "name": "influx-db",
+            "namespace": "default"
+        },
+        "runtime_assets": [
+            "sensu-influxdb-handler"
+        ],
+        "timeout": 60,
+        "type": "pipe"
+    },
+    "invocation": {
+        "module_args": {
+            "annotations": {},
+            "command": "sensu-influxdb-handler -d sensu",
+            "env_vars": {
+                "INFLUXDB_ADDR": "http://influxdb.default.svc.cluster.local:8086",
+                "INFLUXDB_PASS": "password",
+                "INFLUXDB_USER": "sensu"
+            },
+            "filters": [],
+            "handlers": null,
+            "labels": {},
+            "mutator": null,
+            "name": "influx-db",
+            "namespace": "default",
+            "password": "P@ssw0rd!",
+            "runtime_assets": [
+                "sensu-influxdb-handler"
+            ],
+            "socket_host": null,
+            "socket_port": null,
+            "state": "present",
+            "timeout": 60,
+            "type": "pipe",
+            "url": "http://localhost:8080",
+            "user": "admin"
+        }
+    }
+}
 '''
 
 from ansible.module_utils.basic import AnsibleModule
