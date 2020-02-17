@@ -147,7 +147,7 @@ class SensuObject():
     # {key1: val1, key2: val2} into [{key1: val1}, {key2: val2}]
     def param_dict_to_payload_list(self, key):
         if self.params[key]:
-            self.payload[key] = [{k, v} for k, v in self.params[key].items()]
+            self.payload[key] = [{k: v} for k, v in self.params[key].items()]
             self.payload[key].sort()
 
     def param_dict_to_payload_kv_list(self, key):
