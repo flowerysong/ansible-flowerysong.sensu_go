@@ -1,3 +1,9 @@
+# NOTE
+
+Officially supported modules are available at
+<https://galaxy.ansible.com/sensu/sensu_go>; you should probably use
+those instead.
+
 # Sensu Go Ansible Modules
 
 This [Ansible](https://www.ansible.com/) Collection implements a number of
