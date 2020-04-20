@@ -166,6 +166,8 @@ class SensuObject():
     def compare(self):
         for key in self.payload:
             cur = self.server_object.get(key)
+            if key == 'metadata' and cur:
+                cur.pop('created_by', None)
             val = self.payload[key]
             if (cur or val) and (cur != val):
                 return False
