@@ -164,9 +164,8 @@ class SensuCheck(SensuObject):
             self.payload['proxy_requests'] = {
                 'entity_attributes': self.params['proxy_entity_attributes'],
                 'splay': self.params['proxy_splay'],
+                'splay_coverage': self.params['proxy_splay_coverage'],
             }
-            if self.params['proxy_splay']:
-                self.payload['proxy']['splay_coverage'] = self.params['proxy_splay_coverage']
 
 
 def main():
